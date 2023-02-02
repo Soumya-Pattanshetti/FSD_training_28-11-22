@@ -10,11 +10,15 @@ import com.ItemService.Entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-  Optional<User> findByUsername(String username);
+//  Optional<User> findByUsername(String username);
 //  Optional<User> findByUsermail(String email);
+//
+//  Boolean existsByUsername(String username);
+//
+//  Boolean existsByEmail(String email);
+	
+	public User findByGmail(String gmail);
+	public Optional<User> findByUserName(String userName);
 
-  Boolean existsByUsername(String username);
-
-  Boolean existsByEmail(String email);
  
 }

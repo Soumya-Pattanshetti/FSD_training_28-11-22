@@ -28,8 +28,15 @@ public class User {
 
  
   private String password;
+  
+  private String Roles;
+  
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  public void setRoles(String roles) {
+	Roles = roles;
+}
+
+@ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(  name = "user_roles", 
         joinColumns = @JoinColumn(name = "user_id"), 
         inverseJoinColumns = @JoinColumn(name = "role_id"))
