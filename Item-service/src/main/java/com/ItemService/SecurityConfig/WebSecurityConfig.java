@@ -51,7 +51,7 @@ public class WebSecurityConfig {
 					.permitAll()
 					.antMatchers("/home").access("hasRole('USER','ADMIN')")
 					.antMatchers("/order/**").access("hasRole('ADMIN')")
-					.antMatchers("/order/allOrders").access("hasRole('AUTHOR')")
+					.antMatchers("/order/allOrders").access("hasRole('ADMIN')")
 					//.antMatchers("/BookServices/deleteBook/{bookId}").access("hasRole('AUTHOR')")
 					
 					.antMatchers("/order/createOrder/{dealerId}").access("hasRole('USER')")

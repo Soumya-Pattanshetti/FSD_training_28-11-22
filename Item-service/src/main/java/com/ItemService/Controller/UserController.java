@@ -44,7 +44,7 @@ public class UserController {
 	@GetMapping("/home")
 	public String getHomePage() {
 
-		return "Welcome To Digital Book Home Page"; // text
+		return "Welcome "; // text
 	}
 
 	@PostMapping("/register")
