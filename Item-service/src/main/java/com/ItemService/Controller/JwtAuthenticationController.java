@@ -33,7 +33,7 @@ public class JwtAuthenticationController {
 	    @Autowired
 		UserServices userService;
 	    
-	   // @CrossOrigin(value = "http://localhost:4200")
+	    @CrossOrigin(value = "http://localhost:4200")
 	    @PostMapping("/authenticate")
 	    public ResponseEntity<?> authenticate(@RequestBody JwtRequest req) throws Exception {
 	        authenticate(req.getUsername(), req.getPassword());
@@ -41,10 +41,10 @@ public class JwtAuthenticationController {
 	                                .loadUserByUsername(req.getUsername());
 	        final String token = jwtTokenUtil.generateToken(userDetails);
 	        final User userData=userService.findUser(req.getUsername()).get();
-	        final boolean adminUser = userData.getRoles().equalsIgnoreCase("ADMIN")?true:false;
+	        final boolean authorUser = userData.getRoles().equalsIgnoreCase("AUTHOR")?true:false;
 	        JwtResponse jr=new JwtResponse(token);
 	        jr.setUser(userData);
-	        jr.setAdminUser(adminUser);
+	        jr.setAdminUser(authorUser);
 	        return ResponseEntity.ok(jr);
 	    }
 

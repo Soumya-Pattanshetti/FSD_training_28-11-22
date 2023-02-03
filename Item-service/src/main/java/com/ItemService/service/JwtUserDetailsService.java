@@ -1,30 +1,24 @@
 package com.ItemService.service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import com.ItemService.Repositories.UserRepository;
-import com.ItemService.util.JwtTokenUtil;
-
-
+//import com.ItemService.Entity.User;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
-
-	  @Autowired
+		@Autowired
 	  UserServices userService;
+		
 	 @Override
 	    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		 Optional<com.ItemService.Entity.User> user = userService.findUser(username);
@@ -36,6 +30,8 @@ public class JwtUserDetailsService implements UserDetailsService {
 			} else {
 				throw new UsernameNotFoundException("User not found with username: " + username);
 			}
+		} 
+		 
 		} 
 //	        // find user from database where user = :username
 //	        // userRepo.findByUsername(username);// username, password, roles
@@ -49,4 +45,4 @@ public class JwtUserDetailsService implements UserDetailsService {
 //	        } else {
 //	            throw new UsernameNotFoundException("User not found with username: " + username);
 //	        }
-	 }
+	 

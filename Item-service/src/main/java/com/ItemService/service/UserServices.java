@@ -14,35 +14,23 @@ import jdk.jshell.spi.ExecutionControl.UserException;
 @Service
 public class UserServices {
 
-	@Autowired
-	UserRepository userRepo;
+		@Autowired
+		UserRepository userRepo;
 
-	public String addUser(User user) 
-	 {
-		 userRepo.save(user);
-		 return "You are sucessfully Registered Please login ";
-		 
-	 }
-	public String updateUser(User user) throws UserException
-	{
-		if(userRepo.findById(user.getId()).isPresent())
+		public String addUser(User user) 
+		 {
+			 userRepo.save(user);
+			 return "You are sucessfully Registered Please login ";
+			 
+		 }
+		
+		public Optional<User> findUser(String username)
 		{
-			userRepo.deleteById(user.getId());
-			userRepo.save(user);
-		  return "You are sucessfully updated";
-	}else throw new UserServiceException("user not found in DB");
-	}
-	public Optional<User> findUser(String username)
-	{
-		return userRepo.findByUserName(username);
-	}
-//	public Optional<User>  findU(String email)
-//	{
-//		return userRepo.findByGmail(email);
-//	}
-	
-	public User findU(String username)
-	{
-		return userRepo.findByGmail(username);
-	}
+			return userRepo.findByUsername(username);
+		}
+		public User findU(String username)
+		{
+			return userRepo.findByemail(username);
+		}
+
 }

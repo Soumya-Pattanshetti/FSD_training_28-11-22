@@ -48,7 +48,7 @@ public class Ordercontroller {
 	        return ResponseEntity.ok(orderService.deleteOrder(dealerId, OrderId));
 	    }
 
-	    @GetMapping("/{DealerId}/allordersbyDealerId")
+	    @GetMapping("/allordersbyDealerId/{DealerId}")
 	    public ResponseEntity<List<OrderDemo>> getAllorderbydealerId(@PathVariable Long dealerId) {
 	        return ResponseEntity.ok(orderService.getAllorderbydealerId(dealerId));
 	    }

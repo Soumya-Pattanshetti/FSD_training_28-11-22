@@ -16,7 +16,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenUtil implements Serializable {
     private static final long serialVersionUID = -2550185165626007488L;
-    public static final long TOKEN_VALIDITY = 5 * 60 * 1000; // 5 minutes
+    public static final long TOKEN_VALIDITY = 60 * 60 * 1000; // 1 hr
     
     @Value("${jwt.secret}")
     private String secret; // = "mysecretkey@20e7rer7tekjdhsf"
@@ -51,7 +51,7 @@ public class JwtTokenUtil implements Serializable {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", "user");
         claims.put("date", LocalDateTime.now().toString());
-        claims.put("message", "some other message");
+        claims.put("message", "your using Digital book");
         return doGenerateToken(claims, userDetails.getUsername());
     }
 

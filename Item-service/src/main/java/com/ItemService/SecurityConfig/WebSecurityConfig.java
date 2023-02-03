@@ -19,43 +19,49 @@ import com.ItemService.filter.JwtRequestFilter;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-    @Autowired
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    @Autowired
-    private UserDetailsService jwtUserDetailsService;
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    
+		@Autowired
+		private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+		@Autowired
+		private UserDetailsService jwtUserDetailsService;
+		@Autowired
+		private JwtRequestFilter jwtRequestFilter;
 
-        auth.userDetailsService(jwtUserDetailsService)
-                .passwordEncoder(new BCryptPasswordEncoder());
+		@Autowired
+		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+			
 
-    }
+			auth.userDetailsService(jwtUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-	    return authenticationConfiguration.getAuthenticationManager();
+		}
+
+		@Bean
+		public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+				throws Exception {
+			return authenticationConfiguration.getAuthenticationManager();
+		}
+
+		@Bean
+		public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+			httpSecurity.cors();
+			httpSecurity.csrf().disable()
+
+					
+					.authorizeRequests().antMatchers("/authenticate", "/home","/register", "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/webjars/**")
+					.permitAll()
+					.antMatchers("/home").access("hasRole('USER','ADMIN')")
+					.antMatchers("/order/**").access("hasRole('ADMIN')")
+					.antMatchers("/order/allOrders").access("hasRole('AUTHOR')")
+					//.antMatchers("/BookServices/deleteBook/{bookId}").access("hasRole('AUTHOR')")
+					
+					.antMatchers("/order/createOrder/{dealerId}").access("hasRole('USER')")
+					.antMatchers("/order/updateOrder/{OrderId}").access("hasRole('USER')")
+					.antMatchers("/order/allordersbyDealerId/{dealerId}").access("hasRole('USER')")
+					.antMatchers("/order/deleteOrder/{OrderId}").access("hasRole('USER')")
+					.anyRequest().authenticated().and().exceptionHandling()
+					.authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+					.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+			httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+			return httpSecurity.build();
+		}
 	}
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.cors();
-        httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate", "/greet","/v3/**","/swagger-resources/**","/swagger-ui/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        
-                
-        httpSecurity.addFilterBefore(
-                jwtRequestFilter,
-                UsernamePasswordAuthenticationFilter.class);
-
-                return httpSecurity.build();
-    }
-}
