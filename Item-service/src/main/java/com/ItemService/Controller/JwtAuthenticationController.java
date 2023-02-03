@@ -39,6 +39,7 @@ public class JwtAuthenticationController {
 	        authenticate(req.getUsername(), req.getPassword());
 	        final UserDetails userDetails = userDetailsService
 	                                .loadUserByUsername(req.getUsername());
+	        System.out.println("username "+req.getUsername());
 	        final String token = jwtTokenUtil.generateToken(userDetails);
 	        final User userData=userService.findUser(req.getUsername()).get();
 	        final boolean adminUser = userData.getRoles().equalsIgnoreCase("ADMIN")?true:false;
@@ -50,6 +51,8 @@ public class JwtAuthenticationController {
 
 	    private void authenticate(String username, String password) throws Exception {
 	        try {
+	        	System.out.println("username"+username);
+	        	System.out.println(password);
 	            authenticationManager.authenticate(
 	                    new UsernamePasswordAuthenticationToken(username, password));
 	        } catch (DisabledException e) {
@@ -58,6 +61,7 @@ public class JwtAuthenticationController {
 	            throw new Exception("INVALID_CREDENTIALS", e);
 	        }
 	    }
+	    
 }
     
     

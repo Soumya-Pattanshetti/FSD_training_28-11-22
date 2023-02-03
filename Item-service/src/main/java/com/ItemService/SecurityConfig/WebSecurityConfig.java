@@ -26,14 +26,11 @@ public class WebSecurityConfig {
 		private UserDetailsService jwtUserDetailsService;
 		@Autowired
 		private JwtRequestFilter jwtRequestFilter;
-
-		@Autowired
-		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-			
-
-			auth.userDetailsService(jwtUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-
-		}
+//
+//		@Autowired
+//		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//
+//		}
 
 		@Bean
 		public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
@@ -49,7 +46,7 @@ public class WebSecurityConfig {
 					
 					.authorizeRequests().antMatchers("/authenticate", "/home","/register", "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/webjars/**")
 					.permitAll()
-					.antMatchers("/home").access("hasRole('USER','ADMIN')")
+					.antMatchers("/home").access("hasAnyRole('USER','ADMIN')")
 					.antMatchers("/order/**").access("hasRole('ADMIN')")
 					.antMatchers("/order/allOrders").access("hasRole('ADMIN')")
 					//.antMatchers("/BookServices/deleteBook/{bookId}").access("hasRole('AUTHOR')")

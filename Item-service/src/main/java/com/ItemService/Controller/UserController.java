@@ -50,8 +50,7 @@ public class UserController {
 	@PostMapping("/register")
 	public String addUser(@RequestBody User user) throws UserServiceException {
 		System.out.println( user.getUsername() +user.getPassword()+user.getRoles());
-	if (null != user.getUsername() && null != user.getPassword() && null != user.getRoles()&& null != user.getEmail()
-				&& !user.getUsername().isBlank() && user.getPassword().isBlank() && user.getRoles().isBlank()&& !user.getEmail().isBlank() ) {
+	if (null != user.getUsername() && null != user.getPassword() && null != user.getRoles()&& null != user.getEmail()) {
 		return userService.addUser(user);
 
 		} else
