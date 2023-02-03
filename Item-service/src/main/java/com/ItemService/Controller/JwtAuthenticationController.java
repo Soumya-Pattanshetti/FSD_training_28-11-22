@@ -41,10 +41,10 @@ public class JwtAuthenticationController {
 	                                .loadUserByUsername(req.getUsername());
 	        final String token = jwtTokenUtil.generateToken(userDetails);
 	        final User userData=userService.findUser(req.getUsername()).get();
-	        final boolean authorUser = userData.getRoles().equalsIgnoreCase("AUTHOR")?true:false;
+	        final boolean adminUser = userData.getRoles().equalsIgnoreCase("ADMIN")?true:false;
 	        JwtResponse jr=new JwtResponse(token);
 	        jr.setUser(userData);
-	        jr.setAdminUser(authorUser);
+	        jr.setAdminUser(adminUser);
 	        return ResponseEntity.ok(jr);
 	    }
 

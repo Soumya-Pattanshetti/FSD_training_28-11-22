@@ -15,6 +15,7 @@ import com.user.Repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfiguration {

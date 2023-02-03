@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.user.Entity.AuthenticationResponse;
 import com.user.Entity.LoginRequest;
 import com.user.Entity.RegisterRequest;
+import com.user.Entity.Role;
 import com.user.Entity.User;
 import com.user.Exception.UserServiceException;
 import com.user.Repository.UserRepository;
@@ -32,24 +33,21 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class UserService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository = null;
+    private final PasswordEncoder passwordEncoder = null;
 
-    private static AuthenticationResponse generateAuthenticationResponse(User savedUser, String token) {
+    private final JwtService jwtService = new JwtService();
+    private final AuthenticationManager authenticationManager = null;
+
+    private static AuthenticationResponse hideUserPassword(User savedUser, String token) {
         return AuthenticationResponse.builder()
                 .token(token)
-                .Id(savedUser.getDealerId())
-                .firstName(savedUser.getFirstName())
-                .lastName(savedUser.getLastName())
+                .id(savedUser.getId())
+                .name(savedUser.getName())
                 .emailId(savedUser.getEmailId())
-                .role(savedUser.getRole())
+                .password("***************")//Hide the password and don't send the real Password
+                .adminUser(savedUser.isAdminUser())
                 .build();
-    }
-
-    public Optional<User> retrieveAllUsers(String emailId ) {
-        return userRepository.findByEmailId(emailId);
     }
 
     public Optional<User> retrieveUserById(Long userId) {
@@ -60,25 +58,28 @@ public class UserService {
         return userRepository.findByEmailId(email);
     }
 
-    public AuthenticationResponse registerUser(RegisterRequest registerRequest) {
+    public AuthenticationResponse addUser(RegisterRequest registerRequest) {
         userRepository.findByEmailId(registerRequest.getEmailId()).ifPresent(x -> {
             throw new UserServiceException("User Registration Error: Email Already Registered");
         });
         var user = User.builder()
-                .firstName(registerRequest.getFirstName())
-                .lastName(registerRequest.getLastName())
+                .name(registerRequest.getName())
                 .emailId(registerRequest.getEmailId())
-                .password(passwordEncoder.encode(registerRequest.getPassword())).role(registerRequest.getRole())
+                .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .subscriptions(new ArrayList<>())
+                .authorUser(registerRequest.isAuthorUser())
+                .role(registerRequest.isAuthorUser() ? Role.ADMIN : Role.USER)
                 .build();
+
         User newUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user.getEmailId());
-        return generateAuthenticationResponse(newUser, jwtToken);
+        return hideUserPassword(newUser, jwtToken);
     }
 
     public AuthenticationResponse loginUser(LoginRequest registerRequest) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(registerRequest.getEmailId(), registerRequest.getPassword()));
-        var user = userRepository.findByEmailId(registerRequest.getEmailId()).orElseThrow(() -> new PartnerCompServiceException("Login Error: User or Password Invalid"));
+        var user = userRepository.findByEmailId(registerRequest.getEmailId()).orElseThrow(() -> new UserServiceException("Login Error: User or Password Invalid"));
         var jwtToken = jwtService.generateToken(user.getEmailId());
-        return generateAuthenticationResponse(user, jwtToken);
+        return hideUserPassword(user, jwtToken);
     }
 }

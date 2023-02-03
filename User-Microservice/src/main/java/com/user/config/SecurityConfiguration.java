@@ -1,7 +1,5 @@
 package com.user.config;
 
-import javax.management.relation.Role;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -30,8 +28,13 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests()
                 //Allow this patterns for all
-                .antMatchers("/swagger-resources/**","/v2/**","/v3/**", "/swagger-ui/**").permitAll()
-                .antMatchers("/api/v1/picosys/authentication/**").permitAll()
+                .antMatchers("/swagger-resources/**","/v2/**","/v3/**", "/swagger-ui/**")
+                .permitAll()
+                .antMatchers("/api/v1/digitalbooks/books/**","/api/v1/digitalbooks/authentication/**")
+                .permitAll()
+                //Everything below this will be authenticated
+                .anyRequest()
+                .authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
