@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -26,25 +27,29 @@ public class WebSecurityConfig {
 		private UserDetailsService jwtUserDetailsService;
 		@Autowired
 		private JwtRequestFilter jwtRequestFilter;
-//
-//		@Autowired
-//		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//
-//		}
+
+		@Autowired
+		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+			
+
+			auth.userDetailsService(jwtUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+
+		}
 
 		@Bean
 		public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
 				throws Exception {
 			return authenticationConfiguration.getAuthenticationManager();
 		}
-
+		
+		
 		@Bean
 		public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 			httpSecurity.cors();
 			httpSecurity.csrf().disable()
 
 					
-					.authorizeRequests().antMatchers("/authenticate", "/home","/register", "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/webjars/**")
+					.authorizeRequests().antMatchers("**","/authenticate", "/home","/register", "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/webjars/**")
 					.permitAll()
 					.antMatchers("/home").access("hasAnyRole('USER','ADMIN')")
 					.antMatchers("/order/**").access("hasRole('ADMIN')")

@@ -16,7 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.ItemService.service.JwtUserDetailsService;
 import com.ItemService.util.JwtTokenUtil;
 
-import io.jsonwebtoken.ExpiredJwtException;
+import lombok.NonNull;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 	@Autowired
@@ -25,39 +25,26 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private JwtTokenUtil jwtTokenUtil;
 
     @Override
-    protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain chain) throws ServletException, IOException {
-        final String requestTokenHeader = request.getHeader("Authorization");
-        String username = null;
-        String jwtToken = null;
-        if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
-            jwtToken = requestTokenHeader.substring(7);
-            try {
-                username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Unable to get JWT Token");
-            } catch (ExpiredJwtException e) {
-                System.out.println("JWT Token has expired");
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+    	String AUTH_TOKEN_START = "Bearer ";
+
+    	final String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith(AUTH_TOKEN_START)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        final String jwt = authHeader.substring(AUTH_TOKEN_START.length());
+        final String userEmail = jwtTokenUtil.getUsernameFromToken(jwt);
+        
+        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(userEmail);
+
+            if (jwtTokenUtil.validateToken(jwt, userDetails)) {
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
-        System.out.println("username"+username);
-        if (username != null &&
-                SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
-            if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            
-                SecurityContextHolder
-                        .getContext()
-                        .setAuthentication(usernamePasswordAuthenticationToken);
-            }
-        }
-        chain.doFilter(request, response);
-        System.out.println("post process");
+        filterChain.doFilter(request, response);
     }
 }

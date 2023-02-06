@@ -20,15 +20,19 @@ public class User {
   private String password;
   private String Roles;
   
-  public User(Long id, String username, String email, String password, String roles) {
+  
+  public User() {
+	super();
+}
+
+public User(Long id, String username, String email, String password, String roles) {
 	super();
 	this.id = id;
 	this.username = username;
 	this.email = email;
 	this.password=password;
 //	 PasswordEncoder encoder = new BCryptPasswordEncoder();
-//	 //String encodedStr = 
-//	this.password = encoder.encode(password);
+//	 String encodedStr = password = encoder.encode(password);
 	Roles = roles;
   }
 

@@ -29,7 +29,7 @@ import com.ItemService.service.UserServices;
 
 
 @RestController
-//@SecurityRequirement(name = "security_scheme")
+
 @CrossOrigin(value="http://localhost:4200/")
 public class UserController {
 	@Autowired
@@ -38,8 +38,7 @@ public class UserController {
 	@Autowired
 	UserServices userService;
 	
-//	@Autowired
-//	private OrderDemo orderdemo;
+	
 
 	@GetMapping("/home")
 	public String getHomePage() {
@@ -66,20 +65,19 @@ public class UserController {
 	 @PostMapping("/createOrder/{dealerId}")
 	  public ResponseEntity createOrder(@PathVariable int dealerId,@RequestBody OrderDemo order) {
 		    String url = "http://localhost:8085/order/createOrder"+"/"+dealerId;
-		    OrderDemo orderobj = new OrderDemo();
-		    orderobj.setCarName(orderobj.getCarName());
-		    orderobj.setModel(orderobj.getModel());
-		    //orderobj.setDate(orderobj.getDate());
-		    orderobj.setFCode(orderobj.getFCode());
-		    orderobj.setIndicator(orderobj.getIndicator());
-		    orderobj.setDealerId(orderobj.getDealerId());
-		    orderobj.setSysCode(orderobj.getSysCode());
+		    //OrderDemo orderobj = new OrderDemo();
+		    order.setCarName(order.getCarName());
+		    order.setModel(order.getModel());
+		    order.setFCode(order.getFCode());
+		    order.setIndicator(order.getIndicator());
+		    order.setDealerId(order.getDealerId());
+		    order.setSysCode(order.getSysCode());
 		    String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-		    orderobj.setDate(timeStamp);
+		    order.setDate(timeStamp);
 		    
 		    HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
-			HttpEntity entity = new HttpEntity(orderobj,headers);
+			HttpEntity entity = new HttpEntity(order,headers);
 			ResponseEntity<String> status = this.restTemplate.exchange(url, HttpMethod.POST,entity, String.class);
 			return status;
 	  }
