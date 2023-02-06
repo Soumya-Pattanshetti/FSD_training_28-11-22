@@ -26,7 +26,7 @@ public class OrderService {
 	    public String updateOrder(OrderDemo order, int orderId) {
 			String status="Not able to update order ";
 			OrderDemo orderList = orderrepo.findById(orderId).orElseThrow(
-				()-> new OrderServiceException("failed to update order"));
+					()-> new OrderServiceException("failed to update order"));
 			if(order!=null) {
 				order.setFCode(order.getFCode());
 				order.setIndicator(order.getIndicator());
