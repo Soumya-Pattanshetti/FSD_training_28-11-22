@@ -1,0 +1,39 @@
+
+<div class="user">
+    <!-- <header class="user__header">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt="" />
+        <h1 class="user__title">New Here?</h1>
+        <h2 style="color:white; padding-top: 10px;">Register youself to enjoy reading!</h2>
+    </header>
+     -->
+    <form class="form" name="myForm" #myForm="ngForm" #regForm='ngForm' (ngSubmit)='onSubmit(myForm)'>
+        <div class="form__group">
+          <input name="username" type="text" required
+          placeholder="Username" class="form__input" id="exampleInputPassword1"  [(ngModel)]="register.username">
+        </div>
+        
+        <div class="form__group">
+          <input name="password" type="text" required
+          placeholder="Password" class="form__input" id="exampleInputPassword1"  [(ngModel)]="register.password">
+        </div>
+        
+        <div class="form__group">
+          <input name="email" type="text" required
+          placeholder="Email" class="form__input" id="exampleInputPassword1"  [(ngModel)]="register.email">
+        </div>
+  
+        <div class="form__group">
+          <select placeholder="Select Role" name="role" class="form__input" required [(ngModel)]="register.role">
+            <option value="" disabled selected>Select your Role</option>
+            <option value="ROLE_AUTHOR">Author</option>
+            <option value="ROLE_READER">Reader</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" [disabled]="!regForm.valid" style="margin-bottom: 10px; background-color: red;">Sign Up</button>
+        
+  
+        
+    </form>
+  </div>
+  

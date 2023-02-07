@@ -1,0 +1,29 @@
+<div class="navbar bg-base-300">
+    <div class="navbar-start">
+        <a class="btn btn-ghost normal-case text-xl" [routerLink]='"/"'>
+            <img src="assets/icondev.svg" alt="book" class="h-10 w-10">
+            Partnership Compensation System
+        </a>
+    </div>
+    <div class="navbar-center flex">
+        <div *ngIf="loginService?.user" class="flex gap-10">
+            <p class="bold font-extrabold p-2 w-auto">Your Actions:</p>
+            <a class="disabled rounded-sm p-2 w-auto text-gray-400 select-none" *ngIf="loginService.user?.role === 'USER'">~No Actions Available~</a>
+            <a class="link hover:link-info hover:glass rounded-sm p-2 w-auto" *ngIf="loginService.user?.role === 'COMPENSATION_PLAN_USER' || loginService.user?.role === 'ADMIN'" [routerLink]='"compensation-plan/create"'>Create A Compensation Plan</a>
+            <a class="link hover:link-info hover:glass rounded-sm p-2 w-auto" *ngIf="loginService.user?.role === 'ADMIN'" [routerLink]='"administrator/user-list"'>List of Users</a>
+            <a class="link hover:link-info hover:glass rounded-sm p-2 w-auto" *ngIf="loginService.user?.role === 'ADMIN'" [routerLink]='"administrator/compensation-report"'>List of Compensation Plans</a>
+        </div>
+    </div>
+    <div class="navbar-end gap-4" *ngIf="!loginService.user">
+        <a class="btn" [routerLink]='"/login"'>Login</a>
+        <a class="btn" [routerLink]='"/register"'>Signup</a>
+    </div>
+    <div class="navbar-end gap-4 pl-4" *ngIf="loginService.user">
+        <div>
+            <p>Welcome, {{loginService.user.emailId}}</p>
+            <a class="underline text-blue-600 disabled">Options</a>
+            |
+            <a href="\" class="underline text-blue-600" (click)="flushCookies()">Logout</a>
+        </div>
+    </div>
+</div>

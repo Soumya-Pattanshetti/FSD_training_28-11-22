@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.ItemService.Repositories.UserRepository;
 import com.ItemService.filter.JwtRequestFilter;
 @Configuration
 @EnableWebSecurity
@@ -27,11 +28,12 @@ public class WebSecurityConfig {
 		private UserDetailsService jwtUserDetailsService;
 		@Autowired
 		private JwtRequestFilter jwtRequestFilter;
+		//private final UserRepository userRepository;
 
+
+		
 		@Autowired
 		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-			
-
 			auth.userDetailsService(jwtUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
 
 		}
@@ -54,7 +56,7 @@ public class WebSecurityConfig {
 					.antMatchers("/home").access("hasAnyRole('USER','ADMIN')")
 					.antMatchers("/order/**").access("hasRole('ADMIN')")
 					.antMatchers("/order/allOrders").access("hasRole('ADMIN')")
-					//.antMatchers("/BookServices/deleteBook/{bookId}").access("hasRole('AUTHOR')")
+					
 					
 					.antMatchers("/order/createOrder/{dealerId}").access("hasRole('USER')")
 					.antMatchers("/order/updateOrder/{OrderId}").access("hasRole('USER')")

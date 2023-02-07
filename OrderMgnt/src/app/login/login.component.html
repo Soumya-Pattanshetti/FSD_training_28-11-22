@@ -1,0 +1,43 @@
+<app-home-navbar></app-home-navbar>
+<div>
+  <div class="box-form">
+    <!-- <div class="left">
+      <div class="overlay">
+        <h1>Hola! User.</h1>
+        <p>User will be redirected to page based on its role.
+          Author and Reader have separate workspaces.</p>
+        <span>
+          <p>login with social media</p>
+          <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+          <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Login with Twitter</a>
+        </span>
+      </div>
+    </div> -->
+
+
+    <div class="p-2 text-center item-center">
+      <h5>Login</h5>
+      <p>Don't have an account? <a name="create" [routerLink]="['/register']" style="color: rgb(102, 100, 100); cursor: pointer;"><b><u>Create Your
+              Account</u></b></a> it takes less than a minute</p>
+      <form *ngIf="!isLoggedIn" name="form" class="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="inputs">
+          <input name="username" #username="ngModel" placeholder="Username" type="text" class="form-control" id="exampleInputEmail1"
+            aria-describedby="emailHelp" [(ngModel)]="form.username" required>
+            <div *ngIf="username.invalid && (username.dirty || username.touched)"
+    class="alert alert-danger">Please enter your username!</div>
+          <br>
+          <input name="password" #password="ngModel" placeholder="Password" type="password" class="form-control" id="exampleInputPassword1"
+            minlength="6" [(ngModel)]="form.password" required>
+            <div *ngIf="password.errors?.minlength">Invalid Password!</div>
+            <br>
+           <button type="submit" class="btn btn-block btn-primary">Login</button>
+          </div>
+        <br>
+      </form>
+    </div>
+
+  </div>
+</div>
+<div class="footer">
+  <p style="color: white;"> ©2020 developed & Managed by Digital Books</p>
+</div>

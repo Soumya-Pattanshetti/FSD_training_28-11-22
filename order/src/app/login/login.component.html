@@ -1,0 +1,43 @@
+<div class="hero min-h-screen bg-[url('/assets/book_wall.jpg')]">
+    <div class="hero-content flex-col lg:flex-row-reverse bg-base-200 bg-opacity-70 rounded-xl">
+        <div class="text-center lg:text-left">
+            <h1 class="text-5xl font-bold">Login now!</h1>
+            <p class="py-6">Fill out the form below, to login to my super awesome imaginary website. 😁 </p>
+        </div>
+        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div class="card-body">
+                <form [formGroup]="loginForm" (ngSubmit)="userLogin()">
+                    <div class="form-control">
+                        <label class="label" for="username"><span class="label-text">Your username</span></label>
+                        <label for="username" class="input-group">
+                            <input id="username" name="username" type="text" placeholder="username"
+                                class="input input-bordered" formControlName="emailId" />
+                        </label>
+                        <p><span class="text-red-400 w-full p-5 label-text-alt"
+                                *ngIf="loginForm.controls['username'].invalid && loginForm.controls['username'].dirty">Please
+                                </span></p>
+                    </div>
+                    <br>
+                    <div class="form-control">
+                        <label class="label" for="password"><span class="label-text">Your Password</span></label>
+                        <label for="password" class="input-group">
+                            <span>🔑</span>
+                            <input id="password" name="password" type="password" placeholder="password"
+                                class="input input-bordered" formControlName="password" />
+                        </label>
+                        <p><span class="text-red-400 w-full p-5 label-text-alt"
+                                *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].dirty">Password
+                                must be atleast a characters long</span></p>
+                       
+                    </div>
+                    <div class="form-control mt-6">
+                        <button class="btn btn-success" [disabled]="loginForm.invalid">Login</button>
+                    </div>
+                    <div>
+                        <p class="text-red-400" *ngIf="errorMessage">{{errorMessage}}</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

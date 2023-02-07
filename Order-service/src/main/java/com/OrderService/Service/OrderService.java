@@ -27,12 +27,12 @@ public class OrderService {
 			String status="Not able to update order ";
 			OrderDemo orderList = orderrepo.findById(orderId).orElseThrow(
 					()-> new OrderServiceException("failed to update order"));
-			if(order!=null) {
-				order.setFCode(order.getFCode());
-				order.setIndicator(order.getIndicator());
-				order.setModel(order.getModel());
-				order.setSysCode(order.getSysCode());
-				order.setCarName(order.getCarName());
+			if(orderList!=null) {
+				orderList.setFCode(order.getFCode());
+				orderList.setIndicator(order.getIndicator());
+				orderList.setModel(order.getModel());
+				orderList.setSysCode(order.getSysCode());
+				orderList.setCarName(order.getCarName());
 				status=  "updated order' "+order.getCarName()+"'";
 	           }
 			return status;

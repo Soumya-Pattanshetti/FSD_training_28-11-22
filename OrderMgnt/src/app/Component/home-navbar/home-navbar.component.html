@@ -1,0 +1,13 @@
+
+<div class="topnav">
+    <ul>
+        <li><a [routerLink]="['/']"><span class="nav-text"> Home</span></a></li>
+        <div class="dropdown1">
+           <a href=""  [routerLink]="['login']"><span class="nav-text"> Login</span></a>
+         </div>
+        <div class="dropdown">
+          <a  (click)="guestRedirect()"><span class="nav-text"> Guest User</span></a>
+        </div> 
+        <li style="float: right; margin-right: 45px;"><a [routerLink]="['/contactus']"><span class="nav-text"> Contact us</span></a></li> 
+       </ul>
+</div>

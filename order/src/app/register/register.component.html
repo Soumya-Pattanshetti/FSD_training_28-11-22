@@ -1,0 +1,66 @@
+<p>register works!</p>
+<div >
+    <div class="hero-content text-center">
+        <div class="w-screen shadow-lg border-base-100 p-4 border-2 rounded-box bg-base-200 opacity-95">
+            <h1 class="text-5xl font-bold">Register Here...</h1>
+            <hr class="border-base-100 border-2">
+            <p class="py-6">Register to One of the leading Book Subscription Services on the internet. Get access to
+                over 50,000,000+ books once the migration is completed.</p>
+            <br>
+            <div id="registrationFormContainer">
+                <form class="grid grid-cols-2 gap-4" [formGroup]="registerationForm" (ngSubmit)="registerUser()">
+                    <div class="form-control">
+                        <label class="label" for="firstName"><span class="label-text">First Name</span></label>
+                        <input id="username" name="username" type="text" placeholder="please write usernmae'"
+                            class="input input-bordered rounded-none rounded-t" formControlName="firstName" />
+                        <span *ngIf="registerationForm.controls['firstName'].invalid && registerationForm.controls['firstName'].dirty">
+
+                        </span>
+                    </div>
+                
+                    <div class="form-control">
+                        <label class="label" for="emailId"><span class="label-text">Your Email</span></label>
+                        <input id="emailId" name="emailId" type="text" placeholder="Eg. 'info@site.com'"
+                            class="input input-bordered rounded-none rounded-t" formControlName="emailId" />
+                        <span class="bg-base-300 text-red-400 w-full label-text-alt rounded-b"
+                            *ngIf="registerationForm.controls['emailId'].invalid && registerationForm.controls['emailId'].dirty">
+                            please enter valid email address.
+                        </span>
+                    </div>
+                    
+                    <div class="form-control">
+                        <fieldset class="border border-solid border-gray-300 p-3 rounded-md">
+                            <legend class="px-2">Role</legend>
+                            <label class="label cursor-pointer">
+                                <span class="label-text">USER</span>
+                                <input id="role_user" name="role" type="radio" class="radio checked:bg-emerald-500"
+                                    formControlName="role" value="USER" checked />
+                            </label>
+                
+                            <label class="label cursor-pointer">
+                                <span class="label-text">ADMINISTRATOR</span>
+                                <input id="role_admin" name="role" type="radio" class="radio checked:bg-red-500"
+                                    formControlName="role" value="ADMIN" checked />
+                            </label>
+                        </fieldset>
+                    </div>
+                    <div class="form-control">
+                        <label class="label" for="password"><span class="label-text">Your Password</span></label>
+                        <input id="password" name="password" type="password" placeholder="password"
+                            class="input input-bordered rounded-none rounded-t" formControlName="password" />
+                        <span class="bg-base-300 text-red-400 w-full label-text-alt rounded-b"
+                            *ngIf="registerationForm.controls['password'].invalid && registerationForm.controls['password'].dirty">
+                            🔑 Password must satisfy all the criteria
+                        </span>
+                    </div>
+                    <div class="form-control ">
+                        <button class="btn btn-active" [disabled]="registerationForm.invalid">Register</button>
+                    </div>
+                    <div>
+                        <p class="text-red-400" *ngIf="errorMessage">{{errorMessage}}</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
