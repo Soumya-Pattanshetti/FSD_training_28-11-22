@@ -1,0 +1,55 @@
+
+<div id="UserFormContainer">
+  <form class="grid grid-cols-2 gap-4" [formGroup]="createOrderForm" (ngSubmit)="createOrder()">
+      <div class="form-control">
+<div class="form-control">
+  <label class="label" for="carname"><span class="label-text">Car Name</span></label>
+  <input id="carname" name="carname" type="text" placeholder="enter carname '"
+      class="input input-bordered rounded-none rounded-t" formControlName="carname" />     
+</div>
+</div>
+<div class="form-control">
+  <label class="label" for="modelname"><span class="label-text">modelname </span></label>
+  <input id="modelname" name="modelname" type="text" placeholder="enter modelname '"
+      class="input input-bordered rounded-none rounded-t" formControlName="modelname" />     
+</div>
+<div class="form-control">
+  <label class="label" for="date"><span class="label-text">date </span></label>
+  <input id="date" name="modelname" type="date" placeholder="enter date '"
+      class="input input-bordered rounded-none rounded-t" formControlName="date" />     
+</div>
+<div class="form-control">
+  <label class="label" for="sysCode"><span class="label-text">sysCode </span></label>
+  <input id="sysCode" name="sysCode" type="text" placeholder="enter sysCode '"
+      class="input input-bordered rounded-none rounded-t" formControlName="sysCode" />     
+</div>
+<div class="form-control">
+  <label class="label" for="sysCode"><span class="label-text">sysCode </span></label>
+  <input id="sysCode" name="sysCode" type="text" placeholder="enter sysCode '"
+      class="input input-bordered rounded-none rounded-t" formControlName="sysCode" />     
+</div>
+<div class="form-control">
+  <fieldset class="border border-solid border-gray-300 p-3 rounded-md">
+      <legend class="px-2">Role</legend>
+      <label class="label cursor-pointer">
+          <span class="label-text">Petrol</span>
+          <input id="fcode" name="fcode" type="radio" class="radio checked:bg-emerald-500"
+              formControlName="fcode" value="Petrol" checked />
+      </label>
+      <label class="label cursor-pointer">
+          <span class="label-text">diesel</span>
+          <input id="fcode" name="fcode" type="radio" class="radio checked:bg-red-500"
+              formControlName="fcode" value="diesel" checked />
+      </label>
+  </fieldset>
+</div>
+<div class="form-control">
+  <label class="label" for="indicator"><span class="label-text">sysCode </span></label>
+  <input id="indicator" name="indicator" type="text" placeholder="enter indicator '"
+      class="input input-bordered rounded-none rounded-t" formControlName="indicator" />     
+</div>
+<div class="form-control mt-6 col-span-2">
+  <button class="btn btn-active" >Create</button>
+</div>
+  </form>
+</div>

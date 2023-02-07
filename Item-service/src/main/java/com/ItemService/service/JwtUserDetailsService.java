@@ -20,17 +20,17 @@ public class JwtUserDetailsService implements UserDetailsService {
 	  UserServices userService;
 		
 	 @Override
-	    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		 Optional<com.ItemService.Entity.User> user = userService.findUser(username);
+	    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		 Optional<com.ItemService.Entity.User> user = userService.findUserByEmail(email);
 			
 			if (null != user) {
 				Set<SimpleGrantedAuthority> authorities = new HashSet<SimpleGrantedAuthority>();
 				authorities.add(new SimpleGrantedAuthority("ROLE_" + user.get().getRoles()));
-				System.out.println("username"+username);
+				System.out.println("username"+email);
 				return new User(user.get().getUsername(), user.get().getPassword(), authorities);
 				
 			} else {
-				throw new UsernameNotFoundException("User not found with username: " + username);
+				throw new UsernameNotFoundException("User not found with username: " + email);
 			}
 		} 
 		 

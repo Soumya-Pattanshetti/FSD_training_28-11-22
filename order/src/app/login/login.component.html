@@ -2,20 +2,21 @@
     <div class="hero-content flex-col lg:flex-row-reverse bg-base-200 bg-opacity-70 rounded-xl">
         <div class="text-center lg:text-left">
             <h1 class="text-5xl font-bold">Login now!</h1>
-            <p class="py-6">Fill out the form below, to login to my super awesome imaginary website. 😁 </p>
+
         </div>
         <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <div class="card-body">
                 <form [formGroup]="loginForm" (ngSubmit)="userLogin()">
                     <div class="form-control">
-                        <label class="label" for="username"><span class="label-text">Your username</span></label>
-                        <label for="username" class="input-group">
-                            <input id="username" name="username" type="text" placeholder="username"
+                        <label class="label" for="email_id"><span class="label-text">Your Email</span></label>
+                        <label for="email_id" class="input-group">
+                            
+                            <input id="email_id" name="emailId" type="text" placeholder="info@site.com"
                                 class="input input-bordered" formControlName="emailId" />
                         </label>
                         <p><span class="text-red-400 w-full p-5 label-text-alt"
-                                *ngIf="loginForm.controls['username'].invalid && loginForm.controls['username'].dirty">Please
-                                </span></p>
+                                *ngIf="loginForm.controls['emailId'].invalid && loginForm.controls['emailId'].dirty">Please
+                                Check your email...</span></p>
                     </div>
                     <br>
                     <div class="form-control">
@@ -28,7 +29,9 @@
                         <p><span class="text-red-400 w-full p-5 label-text-alt"
                                 *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].dirty">Password
                                 must be atleast a characters long</span></p>
-                       
+                        <label class="label">
+                            <a href="#ForgetPasswordElement" class="label-text-alt link link-hover">Forgot password?</a>
+                        </label>
                     </div>
                     <div class="form-control mt-6">
                         <button class="btn btn-success" [disabled]="loginForm.invalid">Login</button>

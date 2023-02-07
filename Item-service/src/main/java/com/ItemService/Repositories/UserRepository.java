@@ -10,7 +10,7 @@ import com.ItemService.Entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>{
-	public User findByemail(String email);
+	public Optional<User> findUserByEmail(String email);
 	public Optional<User> findByUsername(String userName);
 
 }

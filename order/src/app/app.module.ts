@@ -9,6 +9,9 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
 import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { UserComponent } from './user/user.component';
+import { UpdateorderComponent } from './updateorder/updateorder.component';
+import { DeleteorderComponent } from './deleteorder/deleteorder.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     LoginComponent,
     NavigationBarComponent,
     AdminComponent,
-    HomeComponent
+    HomeComponent,
+    UserComponent,
+    UpdateorderComponent,
+    DeleteorderComponent
   ],
   imports: [
     BrowserModule,

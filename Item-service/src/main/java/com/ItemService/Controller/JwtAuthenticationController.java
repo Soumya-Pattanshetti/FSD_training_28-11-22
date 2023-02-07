@@ -36,25 +36,27 @@ public class JwtAuthenticationController {
 	    @CrossOrigin(value = "http://localhost:4200")
 	    @PostMapping("/authenticate")
 	    public ResponseEntity<?> authenticate(@RequestBody JwtRequest req) throws Exception {
-	        authenticate(req.getUsername(), req.getPassword());
+	        authenticate(req.getEmail(), req.getPassword());
 	        final UserDetails userDetails = userDetailsService
-	                                .loadUserByUsername(req.getUsername());
-	        System.out.println("username "+req.getUsername());
-	        final String token = jwtTokenUtil.generateToken(userDetails);
-	        final User userData=userService.findUser(req.getUsername()).get();
-	        final boolean adminUser = userData.getRoles().equalsIgnoreCase("ADMIN")?true:false;
-	        JwtResponse jr=new JwtResponse(token);
-	        jr.setUser(userData);
-	        jr.setAdminUser(adminUser);
-	        return ResponseEntity.ok(jr);
+	                                .loadUserByUsername(req.getEmail());
+	        System.out.println("username "+req.getEmail());
+	        //final String token = jwtTokenUtil.generateToken(userDetails);
+	        //final User userData=userService.findUserByEmail(req.getEmail()).get();
+	       // final boolean adminUser = userData.getRoles().equalsIgnoreCase("ADMIN")?true:false;
+	        //JwtResponse jr=new JwtResponse(token);
+	        //jr.setUser(userData);
+	        //jr.setAdminUser(adminUser);
+	        //return ResponseEntity.ok();
+	        return ResponseEntity.ok(req);
+	    	
 	    }
 
-	    private void authenticate(String username, String password) throws Exception {
+	    private void authenticate(String email, String password) throws Exception {
 	        try {
-	        	System.out.println("username"+username);
+	        	System.out.println("username"+email);
 	        	System.out.println(password);
 	            authenticationManager.authenticate(
-	                    new UsernamePasswordAuthenticationToken(username, password));
+	                    new UsernamePasswordAuthenticationToken(email, password));
 	        } catch (DisabledException e) {
 	            throw new Exception("USER_DISABLED", e);
 	        } catch (BadCredentialsException e) {

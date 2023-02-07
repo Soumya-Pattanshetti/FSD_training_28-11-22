@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   errorMessage!:string;
+  
+
   constructor(
     private userService:LoginService,
     private formBuilder:FormBuilder,
@@ -21,12 +23,13 @@ export class LoginComponent implements OnInit {
   
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      userName:['',[Validators.required,Validators.email,Validators.min(3)]],
+      emailId:['',[Validators.required,Validators.email,Validators.min(3)]],
       password:['',[Validators.required,Validators.min(1)]],
     });
   }
 
   userLogin(){
+    console.log(this.loginForm.value);
     this.userService.loginUser(this.loginForm.value).subscribe(
       success=>{ 
         console.log(success)
